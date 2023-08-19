@@ -24,7 +24,7 @@ Base.prepare(engine, reflect=True)
 measurement = Base.classes.measurement
 station = Base.classes.station
 
-# Create our session (link) from Python to the DB
+# Create our session (link) from Python to the database
 session = Session(engine)
 
 #################################################
@@ -60,7 +60,7 @@ def precipitation():
     # Calculate earliest date in range
     date_one_year = dt.date(2017, 8, 23) - dt.timedelta(days=365)
 
-    # query rainfall for earliest datapoint
+    # query rainfall for a one-year period using the earliest datapoint calculated above
     rain_one_year = session.query(measurement.date, measurement.prcp).filter(measurement.date >= date_one_year).all()
 
     # Create dictionary using jsonify
@@ -76,10 +76,10 @@ def precipitation():
 
 @app.route("/api/v1.0/stations")
 def stations():
-    #query stations from stations dataset
+    # Query stations from stations dataset
     outputs = session.query(station.station).all()
 
-    # use np.ravel function to convert tuples to a regular flattened one-dimensional list
+    # Use np.ravel function to convert tuples to a regular flattened one-dimensional list
     stations = list(np.ravel(outputs))
 
     session.close()  # Close the session
@@ -95,10 +95,10 @@ def temperatures():
     # Define earliest point of date range
     date_one_year = dt.date(2017, 8, 23) - dt.timedelta(days=365)
 
-    #filter temeperature by both station and date
+    # Filter temeperature by both station and date
     outputs = session.query(measurement.tobs).filter(measurement.station == 'USC00519281', measurement.date >= date_one_year).all()
 
-    # use np.ravel function to convert tuples to a regular flattened one-dimensional list
+    # Use np.ravel function to convert tuples to a regular flattened one-dimensional list
     most_active_temps = list(np.ravel(outputs))
 
     session.close()  # Close the session
@@ -113,6 +113,7 @@ def temperatures():
 # Input date as YYYY-MM-DD
 @app.route("/api/v1.0/temp/<start>")
 @app.route("/api/v1.0/temp/<start>/<end>")
+
 def temperature_final(start=None, end=None):
     # Use a select statement which will query min, max and avg temp
     select = [func.min(measurement.tobs), func.avg(measurement.tobs), func.max(measurement.tobs)]
@@ -124,7 +125,7 @@ def temperature_final(start=None, end=None):
     else:
         outputs = session.query(*select).filter(measurement.date >= start, measurement.date <= end).all()
 
-    # use np.ravel function to convert tuples to a regular flattened one-dimensional lis 
+    # Use np.ravel function to convert tuples to a regular flattened one-dimensional lis 
     temp_final = list(np.ravel(outputs))
 
     session.close()  # Close the session
