@@ -125,7 +125,7 @@ def temperature_final(start=None, end=None):
     else:
         outputs = session.query(*select).filter(measurement.date >= start, measurement.date <= end).all()
 
-    # Use np.ravel function to convert tuples to a regular flattened one-dimensional lis 
+    # Use np.ravel function to convert tuples to a regular flattened one-dimensional list 
     temp_final = list(np.ravel(outputs))
 
     session.close()  # Close the session
