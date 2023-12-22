@@ -7,6 +7,6 @@ Python and SQLalchemy climate analysis of rainfall in Hawaii. Create an API to q
 
 ![image](https://github.com/quazchuaz/SQLalchemy_analysis/assets/135037270/026f9344-ce8c-4d64-8b74-cd94f07d1f7f)
 
-## Exploratory Precipitation Analysis
+## Exploratory Station Analysis
 
 ![image](https://github.com/quazchuaz/SQLalchemy_analysis/assets/135037270/6f578dfa-0d35-43af-84db-510a61d465f8)
